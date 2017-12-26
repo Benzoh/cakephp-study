@@ -9,7 +9,7 @@ class HeloController extends AppController {
     // http://localhost:8765/helo
     // http://localhost:8765/helo/index
     public function index() {
-
+        $this->set('message', 'Helo!');
     }
 
     // 最初redirect()と書いたがエラー。予約語かな。
