@@ -43,6 +43,20 @@
         ['value' => 'Linux', 'text' => 'Linux'],
     ], ['multiple' => true]) ?>
 
+    <?= $this->Form->date('date', [
+        'minYear' => 1900,
+        'year' => ['style' => 'width: 100px;'],
+        'month' => ['style' => 'width: 100px;'],
+        'day' => ['style' => 'width: 100px;']
+    ]) ?>
+
+    <hr>
+
+    <?= $this->Form->time('time', [
+        'interval' => 5,
+        'hour' => ['style' => 'width: 100px;'],
+        'minute' => ['style' => 'width: 100px;']
+    ]) ?>
 
     <?= $this->Form->submit('OK') ?>
     <?= $this->Form->end() ?>
