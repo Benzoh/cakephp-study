@@ -31,4 +31,15 @@ class PersonsController extends AppController {
             $this->set('person', $person);
         }
     }
+
+    public function delete($id = null) {
+        $person = $this->Persons->get($id);
+        if ($this->request->is(['post', 'put'])) {
+            if ($this->Persons->delete($person)) {
+                return $this->redirect(['action' => 'index']);
+            }
+        } else {
+            $this->set('person', $person);
+        }
+    }
 }
