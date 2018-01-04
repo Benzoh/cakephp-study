@@ -19,4 +19,16 @@ class PersonsController extends AppController {
     public function index() {
         $this->set('persons', $this->Persons->find('all'));
     }
+
+    public function edit($id = null) {
+        $person = $this->Persons->get($id);
+        if ($this->request->is(['post', 'put'])) {
+            $person = $this->Persons->patchEntity($person, $this->request->data);
+            if ($this->Persons->save($person)) {
+                return $this->redirect(['action' => 'index']);
+            }
+        } else {
+            $this->set('person', $person);
+        }
+    }
 }
