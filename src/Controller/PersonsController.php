@@ -15,4 +15,8 @@ class PersonsController extends AppController {
             }
         }
     }
+
+    public function index() {
+        $this->set('persons', $this->Persons->find('all'));
+    }
 }
