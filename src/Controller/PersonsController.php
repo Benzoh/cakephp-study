@@ -42,4 +42,14 @@ class PersonsController extends AppController {
             $this->set('person', $person);
         }
     }
+
+    public function find() {
+        $persons = [];
+        if ($this->request->is('post')) {
+            $find = $this->request->data['find'];
+            $persons = $this->Persons->find()->where(['name like ' => '%' . $find . '%']);
+        }
+        $this->set('msg', null);
+        $this->set('persons', $persons);
+    }
 }
