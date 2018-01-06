@@ -47,10 +47,14 @@ class PersonsController extends AppController {
         $this->set('msg', null);
         if ($this->request->is('post')) {
             $find = $this->request->data['find'];
+            $first = $this->Persons->find()
+                ->limit(1)
+                ->where(["name like " => '%' . $find . '%']);
             $persons = $this->Persons->find()
-                ->select(['id', 'name'])
-                ->order(['name' => 'Asc'])
+                ->offset(1)
+                ->limit(3)
                 ->where(['name like ' => '%' . $find . '%']);
+            $this->set('msg', $first->first()->name . ' is first data.');
         } else {
             $persons = [];
         }
