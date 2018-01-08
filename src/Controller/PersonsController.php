@@ -48,20 +48,9 @@ class PersonsController extends AppController {
         $persons = [];
         if ($this->request->is('post')) {
             $find = $this->request->data['find'];
-            $first = $this->Persons->find()
-                ->where(['name like ' => '%' . $find . '%'])
-                ->first();
-            $count = $last = $this->Persons->find()
-                ->where(['name like ' => '%' . $find . '%'])
-                ->count();
-            $last = $this->Persons->find()
-                ->offset($count - 1)
-                ->where(['name like ' => '%' . $find . '%'])
-                ->first();
             $persons = $this->Persons->find()
-                ->where(['name like' => '%' . $find . '%']);
-            $msg = 'FIRST: ' . $first->name . 'LAST: ' . $last->name . '(' . $count . ')';
-            $this->set('msg', $msg);
+                ->where(['name like' => '%' . $find . '%'])
+                ->orWhere(['mail like' => '%' . $find . '%']);
         }
         $this->set('persons', $persons);
     }
