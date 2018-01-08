@@ -50,8 +50,12 @@ class PersonsController extends AppController {
             $find = $this->request->data['find'];
             $query = $this->Persons->find();
             $exp = $query->newExpr();
-            $fnc = function($exp, $find) {
-                return $exp->gte('age', $find * 1);
+            $fnc = function($exp, $f) {
+                return $exp
+                    ->isNotNull('name')
+                    ->isNotNull('mail')
+                    ->gt('age', 0)
+                    ->in('name', explode(',', $f));
             };
             $persons = $query->where($fnc($exp, $find));
         }
