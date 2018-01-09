@@ -7,6 +7,11 @@ use Cake\Datasource\ConnectionManager;
 
 class PersonsController extends AppController {
 
+    public function initialize() {
+        parent::initialize();
+        $this->loadComponent('Paginator');
+    }
+
     public function add() {
         if ($this->request->is('post')) {
             $person = $this->Persons->newEntity();
@@ -18,7 +23,8 @@ class PersonsController extends AppController {
     }
 
     public function index() {
-        $this->set('persons', $this->Persons->find('all'));
+        $this->set('persons', $this->paginate());
+        // $this->set('persons', $this->Persons->find('all'));
     }
 
     public function edit($id = null) {
