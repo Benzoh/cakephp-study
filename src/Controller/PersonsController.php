@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Datasource\ConnectionManager;
 
 class PersonsController extends AppController {
 
@@ -48,18 +49,12 @@ class PersonsController extends AppController {
         $persons = [];
         if ($this->request->is('post')) {
             $find = $this->request->data['find'];
-            $query = $this->Persons->find();
-            $exp = $query->newExpr();
-            $fnc = function($exp, $f) {
-                return $exp
-                    ->isNotNull('name')
-                    ->isNotNull('mail')
-                    ->gt('age', 0)
-                    ->in('name', explode(',', $f));
-            };
-            $persons = $query->where($fnc($exp, $find));
+            $connection = ConnectionManager::get('default');
+            $query = 'select * from persons where ' . $find;
+            $persons = $connection->query($query)->fetchAll();
         }
         $this->set('persons', $persons);
-        $this->set('msg', null);
+
+        // えらー中。
     }
 }

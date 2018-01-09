@@ -18,11 +18,11 @@
         </thead>
         <tbody>
             <?php foreach($persons as $person): ?>
+                <?php // ハッシュで帰ってこないので書き換え ?>
                 <tr>
-                    <td><?= h($person->id); ?></td>
-                    <td><?= h($person->name); ?></td>
-                    <td><?= h($person->age); ?></td>
-                    <td><?= h($person->mail); ?></td>
+                    <?php foreach($person as $item): ?>
+                        <td><?= h($item); ?></td>
+                    <?php endforeach; ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>
