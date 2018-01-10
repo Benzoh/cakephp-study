@@ -14,6 +14,10 @@ class PersonsController extends AppController {
         ]
     ];
 
+    public $helpers = [
+        'Paginator' => ['templates' => 'paginator-templates']
+    ];
+
     public function initialize() {
         parent::initialize();
         $this->loadComponent('Paginator');
