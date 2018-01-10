@@ -7,6 +7,13 @@ use Cake\Datasource\ConnectionManager;
 
 class PersonsController extends AppController {
 
+    public $paginate = [
+        'limit' => 5,
+        'order' => [
+            'Persons.name' => 'asc'
+        ]
+    ];
+
     public function initialize() {
         parent::initialize();
         $this->loadComponent('Paginator');

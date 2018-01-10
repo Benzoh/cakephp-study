@@ -12,7 +12,7 @@
         <tbody>
             <?php foreach($persons as $person): ?>
                 <tr>
-                    <td><?= $person->id ?></td>
+                    <td><?= h($person->id) ?></td>
                     <td><?= h($person->name) ?></td>
                     <td><?= h($person->age) ?></td>
                     <td><?= h($person->mail) ?></td>
