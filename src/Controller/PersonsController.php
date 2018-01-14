@@ -31,6 +31,9 @@ class PersonsController extends AppController {
             if ($this->Persons->save($person)) {
                 return $this->redirect(['action' => 'index']);
             }
+            if ($person->errors()) {
+                $this->Flash->error('please check entered values..');
+            }
         }
     }
 
