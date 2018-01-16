@@ -39,6 +39,7 @@ class MessagesTable extends Table {
         return $validator;
     }
 
+    // Messagesにmember_idが用意されているかを明示的にチェックする仕組み
     public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['members_id'], 'Members'));
         return $rules;
