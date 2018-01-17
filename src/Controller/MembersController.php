@@ -29,4 +29,12 @@ class MembersController extends AppController {
         $this->set('_serialize', ['members']);
     }
 
+    public function view($id = null) {
+        $member = $this->Members->get($id, [
+            'contain' => ['Messages']
+        ]);
+        $this->set('member', $member);
+        $this->set('_serialize', ['member']);
+    }
+
 }
