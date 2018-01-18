@@ -1,11 +1,11 @@
-<pre>index.ctp</pre>
+<table>
 <tbody>
 <?php foreach ($members as $member): ?>
 <tr>
     <td><?= $this->Number->format($member->id) ?></td>
-    <td><?= __($member-name) ?></td>
+    <td><?= __($member->name) ?></td>
     <td class="actions">
-        <?= $this->HMTL->link(__('View'), ['action' => 'view', $member->id]) ?>
+        <?= $this->HTML->link(__('View'), ['action' => 'view', $member->id]) ?>
         <?= $this->HTML->link(__('Edit'), ['action' => 'edit', $member->id]) ?>
         <?= $this->Form->postLink(
             __('Delete'),
@@ -16,3 +16,4 @@
 </tr>
 <?php endforeach; ?>
 </tbody>
+</table>

@@ -30,7 +30,7 @@ class MembersTable extends Table {
 
         $validator
             ->requirePresence('name', 'create')
-            ->notEnpty('name');
+            ->notEmpty('name');
 
         $validator
             ->allowEmpty('mail');
