@@ -69,4 +69,15 @@ class MembersController extends AppController {
         $this->set('_serialize', ['member']);
     }
 
+    public function delete($id = null) {
+        $this->request->allowMethod(['post', 'delete']);
+        $member = $this->Members->get($id);
+        if ($this->Members->delete($member)) {
+            $this->Flash->success(__('The member has been deleted.'));
+        } else {
+            $this->Flash->error(__('The member could not be deleted.'));
+        }
+        return $this->redirect(['action' => 'index']);
+    }
+
 }
