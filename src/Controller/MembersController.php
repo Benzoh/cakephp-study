@@ -54,4 +54,19 @@ class MembersController extends AppController {
         $this->set('_serialize', ['member']);
     }
 
+    public function edit($id = null) {
+        $member = $this->Members->get($id, ['contain' => []]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $member = $this->Members->patchEntity($member, $this->request->data);
+            if ($this->Members->save($member)) {
+                $this->Flash->success(__('The member has been saved.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('The member could not be saved.'));
+            }
+        }
+        $this->set(compact('member'));
+        $this->set('_serialize', ['member']);
+    }
+
 }
