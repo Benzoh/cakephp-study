@@ -16,4 +16,14 @@ class MessagesController extends AppController {
         $this->set('_serialize', ['messages']);
     }
 
+    public function view() {
+        $message = $this->Messages->get($id, [
+            'contain' => ['Members']
+        ]);
+        $this->set('message', $message);
+        $this->set('_serialize', ['message']);
+    }
+
+
+
 }
