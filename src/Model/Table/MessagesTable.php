@@ -31,7 +31,7 @@ class MessagesTable extends Table {
 
         $validator
             ->requirePresence('title', 'create')
-            ->notEnpty('title');
+            ->notEmpty('title');
 
         $validator
             ->allowEmpty('comment');

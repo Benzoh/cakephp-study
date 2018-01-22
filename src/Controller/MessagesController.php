@@ -24,6 +24,20 @@ class MessagesController extends AppController {
         $this->set('_serialize', ['message']);
     }
 
-
+    public function add() {
+        $message = $this->Messages->newEntity();
+        if ($this->request->is('post')) {
+            $message = $this->Messages->patchEntity($message, $this->request->data);
+            if ($this->Messages->save($message)) {
+                $this->Flash->success(__('The message has been saved.'));
+                return $this->erdirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('The message could not be saved.'));
+            }
+        }
+        $members = $this->Messages->Members->find('list', ['limit' => 200]);
+        $this->set(compact('message', 'members'));
+        $this->set('_serialize', ['messages']);
+    }
 
 }
