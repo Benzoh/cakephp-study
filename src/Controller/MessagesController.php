@@ -30,7 +30,7 @@ class MessagesController extends AppController {
             $message = $this->Messages->patchEntity($message, $this->request->data);
             if ($this->Messages->save($message)) {
                 $this->Flash->success(__('The message has been saved.'));
-                return $this->erdirect(['action' => 'index']);
+                return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('The message could not be saved.'));
             }
@@ -38,6 +38,24 @@ class MessagesController extends AppController {
         $members = $this->Messages->Members->find('list', ['limit' => 200]);
         $this->set(compact('message', 'members'));
         $this->set('_serialize', ['messages']);
+    }
+
+    public function edit($id = null) {
+        $message = $this->Messages->get($id, [
+            'contain' => []
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $message = $this->Messages->patchEntity($message, $this->request->data);
+            if ($this->Messages->save($message)) {
+                $this->Flash->success(__('The message has been saved.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('The message could not be saved.'));
+            }
+        }
+        $members = $this->Messages->Members->find('list', ['limit' => 200]);
+        $this->set(compact('message', 'members'));
+        $this->set('_serialize', ['message']);
     }
 
 }

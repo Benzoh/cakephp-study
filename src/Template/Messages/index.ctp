@@ -1,3 +1,4 @@
+<table>
 <?php foreach($messages as $message): ?>
 <tr>
     <td><?= $this->Number->format($message->id) ?></td>
@@ -15,3 +16,4 @@
     </td>
 </tr>
 <?php endforeach; ?>
+</table>
