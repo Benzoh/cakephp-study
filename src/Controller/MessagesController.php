@@ -58,4 +58,15 @@ class MessagesController extends AppController {
         $this->set('_serialize', ['message']);
     }
 
+    public function delete($id = null) {
+        $this->request->allowMethod(['post', 'delete']);
+        $message = $this->Messages->get($id);
+        if ($this->Messages->delete($message)) {
+            $this->Flash->success(__('The message has been deleted.'));
+        } else {
+            $this->Flash->error(__('The message could not be deleted.'));
+        }
+        return $this->redirect(['action' => 'index']);
+    }
+
 }
