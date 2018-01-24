@@ -7,7 +7,7 @@
     </tr>
     <tr>
         <th><?= __('id') ?></th>
-        <td><?= $this->Number->format($messge->id) ?></td>
+        <td><?= $this->Number->format($message->id) ?></td>
     </tr>
 </table>
 <div class="row">
