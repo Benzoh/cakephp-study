@@ -6,18 +6,28 @@ use App\Controller\AppController;
 
 class HeloController extends AppController {
 
+    public function initialize() {
+        parent::initialize();
+        $this->viewBuilder()->layout('sample');
+        $this->set('header', '* this is sample site *');
+        $this->set('footer', 'copyright 2018');
+    }
+
     // http://localhost:8765/helo
     // http://localhost:8765/helo/index
     public function index() {
-        $str = $this->request->data('text1');
-        // // リクエスト方法のチェック
-        // var_dump($this->request->is('post'));
-
-        $msg = 'typed:' . $str;
-        if ($str == null) {
-            $msg = 'please type...';
-        }
+        $msg = "これは、サンプルアクションです。";
         $this->set('message', $msg);
+
+        // $str = $this->request->data('text1');
+        // // // リクエスト方法のチェック
+        // // var_dump($this->request->is('post'));
+
+        // $msg = 'typed:' . $str;
+        // if ($str == null) {
+        //     $msg = 'please type...';
+        // }
+        // $this->set('message', $msg);
 
         // $id = $this->request->query('id');
         // $name = $this->request->query('name');
