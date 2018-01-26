@@ -12,6 +12,12 @@ use App\Controller\AppController;
  */
 class ArticlesController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('Paginator');
+        $this->loadComponent('Flash');
+    }
 
     /**
      * Index method
@@ -68,16 +74,19 @@ class ArticlesController extends AppController
         $article = $this->Articles->newEntity();
         if ($this->request->is('post')) {
             $article = $this->Articles->patchEntity($article, $this->request->getData());
+            
+            $article->user_id = 1;
+
             if ($this->Articles->save($article)) {
                 $this->Flash->success(__('The article has been saved.'));
-
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The article could not be saved. Please, try again.'));
         }
-        $users = $this->Articles->Users->find('list', ['limit' => 200]);
-        $tags = $this->Articles->Tags->find('list', ['limit' => 200]);
-        $this->set(compact('article', 'users', 'tags'));
+        // $users = $this->Articles->Users->find('list', ['limit' => 200]);
+        // $tags = $this->Articles->Tags->find('list', ['limit' => 200]);
+        // $this->set(compact('article', 'users', 'tags'));
+        $this->set(compact('article', $article));
         $this->set('_serialize', ['article']);
     }
 
