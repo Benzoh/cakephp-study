@@ -75,6 +75,7 @@ class ArticlesTable extends Table
 
         $validator
             ->scalar('title')
+            ->minLength('title', 10)
             ->maxLength('title', 255)
             ->requirePresence('title', 'create')
             ->notEmpty('title');
@@ -88,6 +89,7 @@ class ArticlesTable extends Table
 
         $validator
             ->scalar('body')
+            ->notEmpty('body')
             ->allowEmpty('body');
 
         $validator
