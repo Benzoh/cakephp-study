@@ -5,6 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Utility\Text;
 
 /**
  * Articles Model
@@ -24,6 +25,14 @@ use Cake\Validation\Validator;
  */
 class ArticlesTable extends Table
 {
+
+    public function beforeSave($event, $entity, $options)
+    {
+        if ($entity->isNew() && !$entity->slug) {
+            $sluggedTitle = Text::slug($entity->title);
+            $entity->slug = subsrt($sluggedTitle, 0, 191);
+        }
+    }
 
     /**
      * Initialize method
