@@ -30,7 +30,7 @@ class ArticlesTable extends Table
     {
         if ($entity->isNew() && !$entity->slug) {
             $sluggedTitle = Text::slug($entity->title);
-            $entity->slug = subsrt($sluggedTitle, 0, 191);
+            $entity->slug = substr($sluggedTitle, 0, 191);
         }
     }
 
