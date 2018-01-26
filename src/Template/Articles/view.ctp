@@ -37,7 +37,7 @@
             <td><?= $this->Number->format($article->id) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Created') ?></th>
+            <th scope="row"><?= __('作成日時') ?></th>
             <td><?= h($article->created) ?></td>
         </tr>
         <tr>
@@ -49,6 +49,7 @@
             <td><?= $article->published ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>
+    <p class="text-right"><?= $this->Html->link('Edit', ['action' => 'edit', $article->slug]) ?></p>
     <div class="row">
         <h4><?= __('Body') ?></h4>
         <?= $this->Text->autoParagraph(h($article->body)); ?>
