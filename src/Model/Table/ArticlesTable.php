@@ -54,6 +54,12 @@ class ArticlesTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
+
+        // $this->belongsToMany('Tags'); // この行を追加
+        //
+        // アソシエーション - モデル同士を繋ぐ - 3.x
+        // https://book.cakephp.org/3.0/ja/orm/associations.html
+
         $this->belongsToMany('Tags', [
             'foreignKey' => 'article_id',
             'targetForeignKey' => 'tag_id',

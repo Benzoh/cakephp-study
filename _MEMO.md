@@ -21,3 +21,7 @@ bin/cake bake model users
 bin/cake bake controller users
 bin/cake bake template users
 ```
+
+```
+bin/cake bake all tags
+```
