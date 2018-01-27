@@ -84,7 +84,12 @@ class ArticlesController extends AppController
             $this->Flash->error(__('The article could not be saved. Please, try again.'));
         }
         // $users = $this->Articles->Users->find('list', ['limit' => 200]);
-        // $tags = $this->Articles->Tags->find('list', ['limit' => 200]);
+        
+        // タグのリストを取得
+        $tags = $this->Articles->Tags->find('list');
+        // ビューコンテキストにtagsをセット
+        $this->set('tags', $tags);
+        
         // $this->set(compact('article', 'users', 'tags'));
         $this->set(compact('article', $article));
         $this->set('_serialize', ['article']);
@@ -100,10 +105,14 @@ class ArticlesController extends AppController
     public function edit($slug)
     // public function edit($id = null)
     {
-        $article = $this->Articles->findBySlug($slug)->firstOrFail();
+        $article = $this->Articles
+            ->findBySlug($slug)
+            ->contain('Tags') // 関連づけられたTagsを読み込み
+            ->firstOrFail();
         // $article = $this->Articles->get($id, [
         //     'contain' => ['Tags']
         // ]);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $this->Articles->patchEntity($article, $this->request->getData());
             // $article = $this->Articles->patchEntity($article, $this->request->getData());
@@ -114,7 +123,13 @@ class ArticlesController extends AppController
             $this->Flash->error(__('The article could not be saved. Please, try again.'));
         }
         // $users = $this->Articles->Users->find('list', ['limit' => 200]);
-        // $tags = $this->Articles->Tags->find('list', ['limit' => 200]);
+        
+        // タグのリストを取得
+        $tags = $this->Articles->Tags->find('list');
+
+        // ビューコンテキストにtagsをセット
+        $this->set('tags', $tags);
+        
         // $this->set(compact('article', 'users', 'tags'));
         $this->set('article', $article);
         $this->set('_serialize', ['article']);
