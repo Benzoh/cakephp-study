@@ -25,7 +25,8 @@
             echo $this->Form->control('slug');
             echo $this->Form->control('body');
             echo $this->Form->control('published');
-            echo $this->Form->control('tags._ids', ['options' => $tags]);
+            // echo $this->Form->control('tags._ids', ['options' => $tags]);
+            echo $this->Form->control('tag_string', ['type' => 'text']);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
