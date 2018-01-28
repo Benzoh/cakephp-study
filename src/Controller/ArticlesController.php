@@ -160,7 +160,7 @@ class ArticlesController extends AppController
 
     public function tags()
     {
-        $tags = $this->request->getParams('pass');
+        $tags = $this->request->getParam('pass');
         $articles = $this->Articles->find('tagged', [
             'tags' => $tags
         ]);
