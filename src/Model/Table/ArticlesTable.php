@@ -28,6 +28,10 @@ class ArticlesTable extends Table
 
     public function beforeSave($event, $entity, $options)
     {
+        if ($entity->tag_string) {
+            $entity->tags = $this->_buildTags($entity->tag_string);
+        }
+        
         if ($entity->isNew() && !$entity->slug) {
             $sluggedTitle = Text::slug($entity->title);
             $entity->slug = substr($sluggedTitle, 0, 191);
@@ -141,5 +145,33 @@ class ArticlesTable extends Table
         }
 
         return $query->group(['Articles.id']);
+    }
+
+    protected function _buildTags($tagString)
+    {
+        $newTags = array_map('trim', explode(',', $tagString));
+        $newTags = array_filter($newTags);
+        $newTags = array_unique($newTags);
+
+        $out = [];
+        $query = $this->Tags->find()
+            ->where(['Tags.title IN' => $newTags]);
+
+        foreach ($query->extract('title') as $existing) {
+            $index = array_search($existing, $newTags);
+            if ($index !== false) {
+                unset($newTags[$index]);
+            }
+        }
+
+        foreach ($query as $tag) {
+            $out[] = $tag;
+        }
+
+        foreach ($newTags as $tag) {
+            $out[] = $this->Tags->newEntity(['title' => $tag]);
+        }
+
+        return $out;
     }
 }
