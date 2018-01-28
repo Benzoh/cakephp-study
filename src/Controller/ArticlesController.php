@@ -158,22 +158,9 @@ class ArticlesController extends AppController
         // return $this->redirect(['action' => 'index']);
     }
 
-    // public function tags()
-    // {
-    //     $tags = $this->request->getParams('pass');
-    //     $articles = $this->Articles->find('tagged', [
-    //         'tags' => $tags
-    //     ]);
-
-    //     $this->set([
-    //         'articles' => $articles,
-    //         'tags' => $tags
-    //     ]);
-    // }
-
-    // 渡された引数はメソッドのパラメーターとして渡されるので、 PHP の可変引数を使ってアクションを記述することもできる
-    public function tags(...$tags)
+    public function tags()
     {
+        $tags = $this->request->getParams('pass');
         $articles = $this->Articles->find('tagged', [
             'tags' => $tags
         ]);
@@ -183,4 +170,17 @@ class ArticlesController extends AppController
             'tags' => $tags
         ]);
     }
+
+    // 渡された引数はメソッドのパラメーターとして渡されるので、 PHP の可変引数を使ってアクションを記述することもできる
+    // public function tags(...$tags)
+    // {
+    //     $articles = $this->Articles->find('tagged', [
+    //         'tags' => $tags
+    //     ]);
+
+    //     $this->set([
+    //         'articles' => $articles,
+    //         'tags' => $tags
+    //     ]);
+    // }
 }
