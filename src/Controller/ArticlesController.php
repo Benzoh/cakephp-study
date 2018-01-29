@@ -17,6 +17,7 @@ class ArticlesController extends AppController
         parent::initialize();
         $this->loadComponent('Paginator');
         $this->loadComponent('Flash');
+        $this->Auth->allow(['tags']);
     }
 
     /**
@@ -183,4 +184,22 @@ class ArticlesController extends AppController
     //         'tags' => $tags
     //     ]);
     // }
+
+    public function isAuthorized($user)
+    {
+        $action = $this->request->getParam('action');
+
+        if (in_array($action, ['add', 'tags'])) {
+            return true;
+        }
+
+        $slug = $this->request->getParam('pass.0');
+        if (!$slug) {
+            return false;
+        }
+
+        $article = $this->Articles->findBySlug($slug)->first();
+
+        return $article->user_id === $user['id'];
+    }
 }

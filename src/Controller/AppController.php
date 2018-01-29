@@ -45,6 +45,7 @@ class AppController extends Controller
         $this->loadComponent('Flash');
 
         $this->loadComponent('Auth', [
+            'authorize' => 'Controller',
             'authenticate' => [
                 'Form' => [
                     'fields' => [
@@ -59,6 +60,8 @@ class AppController extends Controller
             ],
             'unauthorizedRedirect' => $this->referer()
         ]);
+
+        $this->Auth->allow(['display', 'view', 'index']);
 
         /*
          * Enable the following components for recommended CakePHP security settings.
