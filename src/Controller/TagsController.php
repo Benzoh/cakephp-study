@@ -110,4 +110,28 @@ class TagsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function isAuthorized($user)
+    {
+        // var_dump($user);
+        // 権限のテスト
+        if ($user['id'] === 2) {
+            return true;
+        }
+        return false;
+        // $action = $this->request->getParam('action');
+
+        // if (in_array($action, ['add', 'tags'])) {
+        //     return true;
+        // }
+
+        // $slug = $this->request->getParam('pass.0');
+        // if (!$slug) {
+        //     return false;
+        // }
+
+        // $article = $this->Articles->findBySlug($slug)->first();
+
+        // return $article->user_id === $user['id'];
+    }
 }
