@@ -31,4 +31,10 @@ class ContactForm extends Form
         // メール送信する
         return true;
     }
+
+    public function setErrors($errors)
+    {
+        $this->_errors = $errors;
+        // ["フィールド名" => ["検証名" => "表示するエラーメッセージ"]]
+    }
 }

@@ -10,6 +10,7 @@ class ContactController extends AppController
     public function index()
     {
         $contact = new ContactForm();
+        $contact->setErrors(['email' => ['_required' => 'メールアドレスは必須です']]);
 
         $isValid = $contact->validate($this->request->getData());
         // $isValid = $form->validate($this->request->getData());
