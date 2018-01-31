@@ -26,6 +26,12 @@ class ContactController extends AppController
                 $this->Flash->error('フォーム送信に問題がありました');
             }
         }
+
+        if ($this->request->is('get')) {
+            // 例：ユーザーモデルの値
+            $this->request->data('name', 'John Doe');
+            $this->request->data('email', 'john,doe@example.com');
+        }
         $this->set('contact', $contact);
     }
 }
