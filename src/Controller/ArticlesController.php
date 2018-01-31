@@ -58,6 +58,9 @@ class ArticlesController extends AppController
         // 異なるモデルを paginate したい場合は、そのための検索結果を渡すか、 テーブルオブジェクトそのものを渡すか、モデルの名称を渡すか、いずれかをすればいいです。
         // $comments = $this->paginate('Comments');
 
+        // $configはもともとの$paginateの設定分？
+        // $articles = $this->Paginator->paginate($articleTable->find(), $config);
+
         // $this->set(compact('articles'), $this->paginate());
         // $this->set(compact('articles'));
         $this->set('_serialize', ['articles']);
