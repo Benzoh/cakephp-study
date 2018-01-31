@@ -19,6 +19,10 @@ class ContactController extends AppController
             var_dump($isValid);
         }
 
+        // ここでよい??
+        $errors = $contact->errors();
+        var_dump($errors);
+
         if ($this->request->is('post')) {
             if ($contact->execute($this->request->getData())) {
                 $this->Flash->success('すぐにご連絡いたします');
