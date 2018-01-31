@@ -18,7 +18,7 @@ class ContactForm extends Form
     protected function _buildValidator(Validator $validator)
     {
         return $validator->add('name', 'length', [
-                'rule' => ['minlength', 10],
+                'rule' => ['minlength', 1],
                 'message' => '名前は必須です'
             ])->add('email', 'format', [
                 'rule' => 'email',
@@ -32,9 +32,9 @@ class ContactForm extends Form
         return true;
     }
 
-    public function setErrors($errors)
-    {
-        $this->_errors = $errors;
-        // ["フィールド名" => ["検証名" => "表示するエラーメッセージ"]]
-    }
+    // public function setErrors($errors)
+    // {
+    //     $this->_errors = $errors;
+    //     // ["フィールド名" => ["検証名" => "表示するエラーメッセージ"]]
+    // }
 }

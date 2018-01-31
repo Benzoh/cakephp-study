@@ -10,19 +10,20 @@ class ContactController extends AppController
     public function index()
     {
         $contact = new ContactForm();
-        $contact->setErrors(['email' => ['_required' => 'メールアドレスは必須です']]);
+        // $contact->setErrors(['email' => ['_required' => 'メールアドレスは必須です']]);
 
         $isValid = $contact->validate($this->request->getData());
         // $isValid = $form->validate($this->request->getData());
 
-        if ($isValid) {
-            var_dump('>>> validation done.');
+        if (!$isValid) {
             var_dump($isValid);
         }
 
         // ここでよい??
         $errors = $contact->errors();
-        var_dump($errors);
+        if ($errors) {
+            var_dump($errors);
+        }
 
         if ($this->request->is('post')) {
             if ($contact->execute($this->request->getData())) {
@@ -35,7 +36,7 @@ class ContactController extends AppController
         if ($this->request->is('get')) {
             // 例：ユーザーモデルの値
             $this->request->data('name', 'John Doe');
-            $this->request->data('email', 'john,doe@example.com');
+            $this->request->data('email', 'john.doe@example.com');
         }
         $this->set('contact', $contact);
     }
