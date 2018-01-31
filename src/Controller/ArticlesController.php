@@ -12,6 +12,21 @@ use App\Controller\AppController;
  */
 class ArticlesController extends AppController
 {
+    public $paginate = [
+        // ORM\Table::find() によってサポートされたオプションのいずれも含めることができる
+        'fields' => ['Articles.id', 'Articles.created'],
+        'limit' => 5,
+        'order' => [
+            'Article.title' => 'asc'
+        ],
+        // Paginate プロパティーからほとんどの検索オプションを指定することができるものの、 カスタム Finder メソッド に含めた方が、綺麗でかつ単純に指定することが可能となります。 finder オプションを設定することで、 ファインダーを使ったページネーションを 定義することができます。
+        'finder' => 'published',
+
+        // 一般的なページネーションの値を定義することに加え、コントローラーには１セット以上の ページネーションに関するデフォルト設定を定義することができます。そのためには、 設定を加えたいモデルの後に、配列におけるキー名称を加えるだけです。
+        'Articles' => [],
+        'Authors' => [],
+    ];
+
     public function initialize()
     {
         parent::initialize();
@@ -29,12 +44,22 @@ class ArticlesController extends AppController
     {
         // $this->loadComponent('Pagenator');
         $this->paginate = [
+            'limit' => 5,
             'contain' => ['Users']
         ];
         $articles = $this->paginate($this->Articles);
         // $articles = $this->Paginator->paginate($this->Articles->find());
 
-        $this->set(compact('articles'));
+        // デフォルトの paginate() メソッドは、デフォルトのモデルをコントローラーとして使います。 また、find メソッドの検索結果を渡すこともできます。
+        $query = $this->Articles->find()->where(['user_id' => 1]);
+        // $query = $this->Articles->find('hoge')->where(['user_id' => 1]);
+        $this->set(compact('articles'), $this->paginate($query));
+
+        // 異なるモデルを paginate したい場合は、そのための検索結果を渡すか、 テーブルオブジェクトそのものを渡すか、モデルの名称を渡すか、いずれかをすればいいです。
+        // $comments = $this->paginate('Comments');
+
+        // $this->set(compact('articles'), $this->paginate());
+        // $this->set(compact('articles'));
         $this->set('_serialize', ['articles']);
     }
 
@@ -161,17 +186,34 @@ class ArticlesController extends AppController
         // return $this->redirect(['action' => 'index']);
     }
 
+    // タグごとに記事を検索する
     public function tags()
     {
         $tags = $this->request->getParam('pass');
-        $articles = $this->Articles->find('tagged', [
+        
+        $customFinderOptions = [
             'tags' => $tags
-        ]);
+        ];
 
-        $this->set([
-            'articles' => $articles,
-            'tags' => $tags
-        ]);
+        // カスタム Finder メソッドは、ArticlesTable.php の中で "findTagged" と呼ばれる
+        // 以下のような構文となっている
+        // public function findTagged(Query $query, array $options) {
+        // そのため、taggedをキーとして使用する
+        $this->pagenate = [
+            'finder' => [
+                'tagged' => $customFinderOptions
+            ]
+        ];
+        $articles = $this->paginate($this->Articles);
+        // $articles = $this->Articles->find('tagged', [
+        //     'tags' => $tags
+        // ]);
+
+        $this->set(compact('articles', 'tags'));
+        // $this->set([
+        //     'articles' => $articles,
+        //     'tags' => $tags
+        // ]);
     }
 
     // 渡された引数はメソッドのパラメーターとして渡されるので、 PHP の可変引数を使ってアクションを記述することもできる
